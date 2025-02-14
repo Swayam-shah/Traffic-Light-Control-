@@ -1,0 +1,34 @@
+module tb_traffic_light_controller;
+
+    reg clk;
+    reg reset;
+
+    wire [1:0] light;
+    wire pedestrian;
+
+    traffic_light_controller uut (
+        .clk(clk),
+        .reset(reset),
+        .light(light),
+        .pedestrian(pedestrian)
+    );
+
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk; 
+    end
+
+    initial begin
+        reset = 1;
+        #10; 
+        reset = 0;
+
+        #100; 
+        $stop;
+    end
+
+    initial begin
+        $monitor("Time: %0t | Light: %b | Pedestrian: %b", $time, light, pedestrian);
+    end
+
+endmodule
